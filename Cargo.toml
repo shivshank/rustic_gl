@@ -1,0 +1,7 @@
+[package]
+name = "rustic_gl"
+version = "0.1.0"
+authors = ["shivshank"]
+
+[dependencies]
+gl = "*"
