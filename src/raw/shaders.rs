@@ -75,22 +75,44 @@ pub fn get_link_status(program_id: GLuint) -> GlResult<()> {
     }
 }
 
+/// Create an OpenGL program with one function call.
+///
+/// Will report both shader compilation errors and program link errors.
+///
+/// Caller is responsible for deleting the program only. Shaders will be created and then freed
+/// after the program is linked.
 pub fn create_basic_program(vertex_source: &str, fragment_source: &str) -> GlResult<GLuint> {
     let program = create_program()?;
     let vertex_shader = create_shader(gl::VERTEX_SHADER, vertex_source)?;
     let fragment_shader = create_shader(gl::FRAGMENT_SHADER, fragment_source)?;
+    create_linked_program(
+        &[
+            vertex_shader,
+            fragment_shader,
+        ],
+        true
+    );
+    Ok(program)
+}
+
+/// Create an OpenGL program given a slice of shader references.
+///
+/// Pass `true` for `delete_shaders` in order to automatically delete each shader after linking.
+pub fn create_linked_program(shaders: &[GLuint], delete_shaders: bool) -> GlResult<GLuint> {
+    let program = create_program()?;
     unsafe {
-        gl::AttachShader(program, vertex_shader);
-        gl::AttachShader(program, fragment_shader);
-        // n.b., you must do attribute binding before linking!
-        // (but you can always use the attribute location getter)
+        for &shader in shaders {
+            gl::AttachShader(program, shader);
+        }
         gl::LinkProgram(program);
         get_link_status(program)?;
         // we have to detach the shaders before the shader objects will be freed
-        gl::DetachShader(program, vertex_shader);
-        gl::DetachShader(program, fragment_shader);
-        gl::DeleteShader(vertex_shader);
-        gl::DeleteShader(fragment_shader);
+        for &shader in shaders {
+            gl::DetachShader(program, shader);
+            if delete_shaders {
+                gl::DeleteShader(shader);
+            }
+        }
     }
     Ok(program)
 }
