@@ -82,17 +82,15 @@ pub fn get_link_status(program_id: GLuint) -> GlResult<()> {
 /// Caller is responsible for deleting the program only. Shaders will be created and then freed
 /// after the program is linked.
 pub fn create_basic_program(vertex_source: &str, fragment_source: &str) -> GlResult<GLuint> {
-    let program = create_program()?;
     let vertex_shader = create_shader(gl::VERTEX_SHADER, vertex_source)?;
     let fragment_shader = create_shader(gl::FRAGMENT_SHADER, fragment_source)?;
-    create_linked_program(
+    Ok(create_linked_program(
         &[
             vertex_shader,
             fragment_shader,
         ],
         true
-    );
-    Ok(program)
+    )?)
 }
 
 /// Create an OpenGL program given a slice of shader references.
