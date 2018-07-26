@@ -4,6 +4,8 @@ version = "0.3.1"
 authors = ["shivshank"]
 description = "Utilities for working with OpenGL directly"
 
+license = "MIT"
+
 keyworks = ["OpenGL"]
 repository = "https://github.com/shivshank/rustic_gl"
 
