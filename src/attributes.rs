@@ -267,6 +267,10 @@ macro_rules! __buffer_layout_inner {
 /// To activate this layout manually you must call the "declare" method with the location of the
 /// first attribute. **All following attributes are assumed to be at consecutive locations.**
 ///
+/// Note: There may be bugs regarding alignment and non-trivial types haven't been tested. The
+/// author has so far used this macro successfully a number of times, however. If it gives you an
+/// issue, please open an issue. A tool like RenderDoc may be useful for debugging.
+///
 /// # Examples
 ///
 /// ```rust
@@ -275,6 +279,9 @@ macro_rules! __buffer_layout_inner {
 /// # fn main() {
 /// use rustic_gl::attributes::Normalized;
 /// pub type StaticMeshFormat = buffer_layout!([f32; 3], [Normalized<u8>; 4]);
+/// // When you're ready to call `glVertexAttribPointer`, just do
+/// // StaticMeshFormat::declare(0);
+/// // which will set vertex attribute 0 to be a vec3<f32>, and attribute 2 to be a vec4<f32>.
 /// # }
 /// ```
 #[macro_export]

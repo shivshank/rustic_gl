@@ -4,4 +4,4 @@ version = "0.3.0"
 authors = ["shivshank"]
 
 [dependencies]
-gl = "*"
+gl = "0.10.0"
