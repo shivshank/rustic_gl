@@ -1,7 +1,11 @@
 [package]
 name = "rustic_gl"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["shivshank"]
+description = "Utilities for working with OpenGL directly"
+
+keyworks = ["OpenGL"]
+repository = "https://github.com/shivshank/rustic_gl"
 
 [dependencies]
 gl = "0.10.0"
