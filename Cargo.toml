@@ -1,12 +1,12 @@
 [package]
 name = "rustic_gl"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["shivshank"]
 description = "Utilities for working with OpenGL directly"
 
 license = "MIT"
 
-keyworks = ["OpenGL"]
+keywords = ["OpenGL"]
 repository = "https://github.com/shivshank/rustic_gl"
 
 [dependencies]
